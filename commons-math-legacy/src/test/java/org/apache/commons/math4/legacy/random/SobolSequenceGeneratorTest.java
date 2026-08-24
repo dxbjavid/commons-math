@@ -20,6 +20,7 @@ import org.junit.Assert;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.math4.legacy.exception.MathParseException;
@@ -77,7 +78,7 @@ public class SobolSequenceGeneratorTest {
     }
 
     @Test
-    public void testConstructor2() throws Exception{
+    public void testConstructor2() throws IOException {
         try {
             final InputStream is = getClass().getResourceAsStream(RESOURCE_NAME);
             new SobolSequenceGenerator(21202, is);

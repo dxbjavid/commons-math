@@ -114,6 +114,21 @@ public class SobolSequenceGeneratorTest {
     }
 
     @Test
+    public void testConstructorDegreeTooSmall() throws IOException {
+        // direction number degree s = 60 exceeds the BITS (52) entries available
+        // per dimension; without range validation this indexes past direction[d]
+        // and throws ArrayIndexOutOfBoundsException instead of MathParseException.
+        final StringBuilder sb = new StringBuilder("d s a m_i\n2 0 0");
+        final InputStream is = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
+        try {
+            new SobolSequenceGenerator(2, is);
+            Assert.fail("an exception should have been thrown");
+        } catch (MathParseException e) {
+            // expected
+        }
+    }
+
+    @Test
     public void testSkip() {
         double[] result = generator.skipTo(5);
         Assert.assertArrayEquals(referenceValues[5], result, 1e-6);
